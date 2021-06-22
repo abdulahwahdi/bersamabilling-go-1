@@ -15,3 +15,18 @@ type CreatePaymentCodeRequest struct {
 	BookingDatetime string `xml:"booking_datetime"`
 	Signature       string `xml:"signature"`
 }
+
+type StatusInquiryPaymentRequest struct {
+	XMLName xml.Name
+	Type    string `xml:"type"`
+	Item    []ItemRequest
+}
+
+type ItemRequest struct {
+	XMLName         xml.Name
+	BookingID       string `xml:"-"`
+	VaID            string `xml:"vaid"`
+	BookingDatetime string `xml:"booking_datetime"`
+	Username        string `xml:"username"`
+	Signature       string `xml:"signature"`
+}
