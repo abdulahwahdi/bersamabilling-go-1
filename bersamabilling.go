@@ -37,7 +37,6 @@ func (bb *BersamaBilling) call(method string, path string, body io.Reader, v int
 		path = "/" + path
 	}
 
-	path = fmt.Sprintf("%s%s", bb.BaseURL, path)
 	return bb.client.exec(method, path, body, v, headers)
 }
 
@@ -56,7 +55,6 @@ func (bb *BersamaBilling) CreatePaymentCode(request CreatePaymentCodeRequest) (r
 
 	// set header
 	headers := make(map[string]string)
-	pathURL := "/api/tfp/generatePaymentCode"
 
 	// create signature
 	signature := fmt.Sprintf("%s%s%s", bb.Username, bb.Password, request.BookingID)
@@ -70,7 +68,7 @@ func (bb *BersamaBilling) CreatePaymentCode(request CreatePaymentCodeRequest) (r
 		return response, err
 	}
 
-	err = bb.call("POST", pathURL, bytes.NewBuffer(payload), &response, headers)
+	err = bb.call("POST", request.URLCheckout, bytes.NewBuffer(payload), &response, headers)
 	if err != nil {
 		return response, err
 	}
@@ -98,7 +96,6 @@ func (bb *BersamaBilling) StatusInquiryPayment(request StatusInquiryPaymentReque
 
 	// set header
 	headers := make(map[string]string)
-	pathURL := "/api/tfp/inquiryStatus"
 
 	//Inject Signature and Username
 	for i, v := range request.Item {
@@ -123,7 +120,7 @@ func (bb *BersamaBilling) StatusInquiryPayment(request StatusInquiryPaymentReque
 		return response, err
 	}
 
-	err = bb.call("POST", pathURL, bytes.NewBuffer(payload), &response, headers)
+	err = bb.call("POST", request.URLGetStatus, bytes.NewBuffer(payload), &response, headers)
 	if err != nil {
 		return response, err
 	}

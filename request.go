@@ -4,6 +4,7 @@ import "encoding/xml"
 
 type CreatePaymentCodeRequest struct {
 	XMLName         xml.Name
+	URLCheckout     string `xml:"-"`
 	Type            string `xml:"type"`
 	BookingID       string `xml:"bookingid"`
 	ClientID        string `xml:"clientid"`
@@ -17,9 +18,10 @@ type CreatePaymentCodeRequest struct {
 }
 
 type StatusInquiryPaymentRequest struct {
-	XMLName xml.Name
-	Type    string `xml:"type"`
-	Item    []ItemRequest
+	XMLName      xml.Name
+	URLGetStatus string `xml:"-"`
+	Type         string `xml:"type"`
+	Item         []ItemRequest
 }
 
 type ItemRequest struct {
