@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"strings"
 	"time"
 )
 
@@ -33,9 +32,6 @@ func New(baseUrl string, username string, password string, timeout time.Duration
 
 func (bb *BersamaBilling) call(method string, path string, body io.Reader, v interface{}, headers map[string]string) error {
 	bb.info().Println("Starting http call..")
-	if !strings.HasPrefix(path, "/") {
-		path = "/" + path
-	}
 
 	return bb.client.exec(method, path, body, v, headers)
 }
