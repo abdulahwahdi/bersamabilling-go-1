@@ -47,10 +47,12 @@ func (bb *BersamaBilling) CreatePaymentCode(request CreatePaymentCodeRequest) (r
 		}
 	}()
 	var response CreatePaymentCodeResponse
-	response.XMLName = xml.Name{Local: "return"}
+	response.XMLName = xml.Name{Local: "Return"}
 
 	// set header
 	headers := make(map[string]string)
+	headers["Content-Type"] = "application/xml"
+	headers["Accept"] = "application/xml"
 
 	// create signature
 	signature := fmt.Sprintf("%s%s%s", bb.Username, bb.Password, request.BookingID)
@@ -92,6 +94,8 @@ func (bb *BersamaBilling) StatusInquiryPayment(request StatusInquiryPaymentReque
 
 	// set header
 	headers := make(map[string]string)
+	headers["Content-Type"] = "application/xml"
+	headers["Accept"] = "application/xml"
 
 	//Inject Signature and Username
 	for i, v := range request.Item {
@@ -180,4 +184,3 @@ func (bb *BersamaBilling) GetFinalStatusInquiry(code string) string {
 	}
 	return output
 }
-
